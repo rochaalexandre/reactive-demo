@@ -5,7 +5,6 @@ import com.example.reactivedemo.model.Media;
 import com.example.reactivedemo.model.Post;
 import com.example.reactivedemo.model.PostStatus;
 import com.example.reactivedemo.repositories.PostRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -44,7 +43,7 @@ public class PostService {
     }
 
     public void linkMediaWithPostAndPublish(Integer postId, Media media) {
-        System.out.println(" Calling the link post method");
+        System.out.println("Calling the link post method");
          postRepository.findById(postId).map(post -> {
              post.setMediaId(media.getId());
              post.setStatus(PostStatus.publish);
