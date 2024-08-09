@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @Setter
 @Getter
-@Table("\"user\"") // Ensure the table name is quoted
+@Table("users") // using plural to avoid conflict with database reserved word
 public class User {
 
     @Id

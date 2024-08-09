@@ -1,0 +1,32 @@
+CREATE TABLE IF NOT EXISTS Users
+(
+    id       SERIAL PRIMARY KEY,
+    user_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Post
+(
+    id      SERIAL PRIMARY KEY,
+    title   VARCHAR(255) NOT NULL,
+    status  VARCHAR(50)  NOT NULL,
+    media_id INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS Media
+(
+    id     SERIAL PRIMARY KEY,
+    type   VARCHAR(100) NOT NULL,
+    post_id INTEGER NOT NULL
+);
+
+ALTER TABLE Post
+    DROP CONSTRAINT IF EXISTS fk_media;
+ALTER TABLE Media
+    DROP CONSTRAINT IF EXISTS fk_post;
+
+-- Add foreign key constraints using ALTER TABLE
+ALTER TABLE Post
+    ADD CONSTRAINT fk_media FOREIGN KEY (media_id) REFERENCES Media (id);
+
+ALTER TABLE Media
+    ADD CONSTRAINT fk_post FOREIGN KEY (post_id) REFERENCES Post (id) ON DELETE CASCADE;
