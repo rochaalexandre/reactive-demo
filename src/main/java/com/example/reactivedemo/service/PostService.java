@@ -15,16 +15,12 @@ import java.time.Duration;
 @Service
 public class PostService {
     private final PostRepository postRepository;
-    private final MediaCompleteEventBus eventBus;
     private final Sinks.Many<Post> postSink = Sinks.many().multicast().onBackpressureBuffer();
 
 
     public PostService(PostRepository postRepository, MediaCompleteEventBus eventBus) {
         this.postRepository = postRepository;
-        this.eventBus = eventBus;
-        this.eventBus.getEvents().subscribe(event -> {
-            this.linkMediaWithPostAndPublish(event.getMedia().getPostId(), event.getMedia());
-        });
+        eventBus.getEvents().subscribe(event -> this.linkMediaWithPostAndPublish(event.getMedia().getPostId(), event.getMedia()));
     }
 
     public Mono<Post> createPost(String title) {
